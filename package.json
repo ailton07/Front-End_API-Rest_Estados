@@ -1,0 +1,27 @@
+{
+  "name": "front-end_estados_api-rest",
+  "version": "1.0.0",
+  "description": "Front end que utiliza a api rest Estados",
+  "main": "index.html",
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ailton07/Front-End_API-Rest_Estados.git"
+  },
+  "keywords": [
+    "bootstrap",
+    "rest"
+  ],
+  "author": "Ailton da Silva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ailton07/Front-End_API-Rest_Estados/issues"
+  },
+  "homepage": "https://github.com/ailton07/Front-End_API-Rest_Estados#readme"
+}

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+    var apiUrl = "http://localhost:3000/api/v1/estados";
+
+    var buscarEstado = function(){
+      var estado = $('#inputEstado').val()
+      // Validação
+      if (estado && estado != ''){
+				estado = estado.trim()
+        console.log(estado)
+				getData(estado)
+			}
+			else {
+				alert('Please enter the state name')
+			}
+    }
+    var buscarEstadoResumido = function(cidades){
+      var estado = $('#inputEstado').val()
+      // Validação
+      if (estado && estado != ''){
+				estado = estado.trim()
+        console.log(estado)
+        estado = estado + '/' + cidades;
+				getData(estado)
+			}
+			else {
+				alert('Please enter the state name')
+			}
+    }
+
+    function mostrarEstados(){
+      getBigData()
+    }
+
+    $(document).ready(function(){
+      $('.table').hide();
+			$('.retornaEstado').click(function() {
+				buscarEstado();
+			})
+      $('.retornaEstadoResumido').click(function() {
+				buscarEstadoResumido('cidades');
+			})
+      $('.mostrarTudo').click(function() {
+				mostrarEstados();
+			})
+    })
+
+    function getData(estado){
+      $.getJSON(apiUrl+'/'+estado, fetchData);
+		}
+    function getBigData(){
+      $.getJSON(apiUrl, fetchBigData);
+    }
+
+// http://jsfiddle.net/mjaric/sewm6/
+    function fetchData (retorno) {
+			console.log(retorno)
+      drawTable(retorno);
+    }
+    function fetchBigData (retorno) {
+      console.log(retorno)
+      drawBigTable(retorno);
+    }
+
+    function drawBigTable(data) {
+      $('.table').show();
+      $('.table > thead').html('');
+      $('.table > thead').append("<tr> <th>#</th><th>Sigla</th><th>Nome</th><th>Cidades</th></tr>)");
+      for (var i = 0; i < data.length; i++) {
+          drawRow(data[i]);
+      }
+    }
+
+    function drawTable(data) {
+      $('.table').show();
+      $('.table > thead').html('');
+
+
+      if(data.length){
+        $('.table > thead').append("<tr><th>#</th><th>Cidades</th></tr>)");
+        for (var i = 0; i < data.length; i++) {
+            drawRowN(data[i]);
+        }
+      }
+      else{
+        $('.table > thead').append("<tr> <th>#</th><th>Sigla</th><th>Nome</th><th>Cidades</th></tr>)");
+        drawRow(data);
+      }
+
+    }
+    // http://stackoverflow.com/questions/171027/add-table-row-in-jquery
+    function drawRow(rowData) {
+        var lastId = 1 + parseInt($('.table > tbody:last-child >tr:last').find('td').html());
+        if(!lastId){ lastId = 1}
+        $('.table > tbody:last-child').append("<tr><td>" + lastId + "</td><td>" + rowData.sigla + "</td><td>" +
+        rowData.nome + "</td><td>" + rowData.cidades + "</td></tr>");
+    }
+
+    function drawRowN(rowData) {
+      var lastId = 1 + parseInt($('.table > tbody:last-child >tr:last').find('td').html());
+      if(!lastId){ lastId = 1}
+      $('.table > tbody:last-child').append("<tr><td>" + lastId + "</td><td>" + rowData + "</td></tr>");
+    }
+
+
+    </script>
+  </head>
+  <body>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Bootstrap theme</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>Bootstrap example</h1>
+        <p>Uso do template do bootstrap para exemplificar API RETS desenvolvida</p>
+      </div>
+      <div class="page-header">
+              <h1>Buttons</h1>
+
+      </div>
+            <p>
+              <input type="input" id="inputEstado" class="form-control" placeholder="Nome do Estado" required="" autofocus="">
+              <button type="button" class="btn btn-lg retornaEstado">Buscar</button>
+              <button type="button" class="btn btn-lg btn-success retornaEstadoResumido">Busca resumida</button>
+              <hr/>
+            </p>
+            <p>
+              <button type="button" class="btn btn-lg btn-primary mostrarTudo">Mostrar Tudo</button>
+              <hr/>
+            </p>
+
+        <div class="row">
+        <div class="col-md-6">
+          <table class="table">
+            <thead>
+              <!-- <tr>
+                <th>#</th>
+                <th>Sigla</th>
+                <th>Nome</th>
+                <th>Cidades</th>
+              </tr> -->
+            </thead>
+            <tbody>
+              <!-- <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>
+                  Teste<br/>
+                  123 <br/>
+                  4
+                  </td>
+              </tr> -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  </body>
+</html>
